@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다중 페이지 출력</title>
+</head>
+<body>
+    <h1>다중 페이지 출력</h1>
+
+    <h2>첫번째 페이지</h2>
+    <div id="page1">
+        <!-- 첫번째 페이지의 코드 -->
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>실적 보고 양식</title>
+            <script>
+                function calculatePage1() {
+                    // 첫번째 페이지의 계산 함수 코드
+                }
+            </script>
+        </head>
+        <body>
+            <!-- 첫번째 페이지의 내용 -->
+            <!-- ... -->
+        </body>
+        </html>
+    </div>
+
+    <h2>두번째 페이지</h2>
+    <div id="page2">
+        <!-- 두번째 페이지의 코드 -->
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>주문 정보 입력</title>
+            <script>
+                function calculatePage2() {
+                    // 두번째 페이지의 계산 함수 코드
+                }
+            </script>
+        </head>
+        <body>
+            <!-- 두번째 페이지의 내용 -->
+            <!-- ... -->
+        </body>
+        </html>
+    </div>
+
+    <h2>세번째 페이지</h2>
+    <div id="page3">
+        <!-- 세번째 페이지의 코드 -->
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>실적 보고 양식</title>
+            <script>
+                function calculatePage3() {
+                    // 세번째 페이지의 계산 함수 코드
+                }
+            </script>
+        </head>
+        <body>
+            <!-- 세번째 페이지의 내용 -->
+            <!-- ... -->
+        </body>
+        </html>
+    </div>
+
+    <button onclick="calculateAll()">종합 결과 계산하기</button>
+
+    <div id="overallResult"></div>
+
+    <script>
+        function calculateAll() {
+            // 각 페이지의 계산 함수 호출하여 결과 수집
+            var page1Result = calculatePage1();
+            var page2Result = calculatePage2();
+            var page3Result = calculatePage3();
+
+            // 종합 결과 생성
+            var overallResult = "<h2>종합 결과</h2>";
+            overallResult += "<h3>첫번째 페이지 결과</h3>";
+            overallResult += page1Result;
+            overallResult += "<h3>두번째 페이지 결과</h3>";
+            overallResult += page2Result;
+            overallResult += "<h3>세번째 페이지 결과</h3>";
+            overallResult += page3Result;
+
+            // 종합 결과를 페이지에 출력
+            document.getElementById('overallResult').innerHTML = overallResult;
+        }
+    </script>
+</body>
+</html>
