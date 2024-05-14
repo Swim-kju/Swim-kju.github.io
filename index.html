@@ -19,13 +19,130 @@
             <title>실적 보고 양식</title>
             <script>
                 function calculatePage1() {
-                    // 첫번째 페이지의 계산 함수 코드
+                        <script>
+        function calculate() {
+            // 1. 현재 날짜 설정
+            var today = new Date();
+            var day = ["일", "월", "화", "수", "목", "금", "토"];
+            var dateStr = "< " + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 ' + day[today.getDay()] + '요일 수영 상권보고 >';
+            document.getElementById('reportDate').innerHTML = dateStr;
+
+            // 2. 전체 방문 업소 개수 입력 받기
+            var totalStores = parseFloat(document.getElementById('totalStores').value);
+
+            // 3. 각 항목별 세부 항목 입력 받기 및 퍼센티지 계산
+            // 가. 무학
+            var muhakGoodDay = parseFloat(document.getElementById('muhakGoodDay').value) || 0;
+            var muhakToxSeries = parseFloat(document.getElementById('muhakToxSeries').value) || 0;
+            var muhakOther = parseFloat(document.getElementById('muhakOther').value) || 0;
+
+            var muhakTotal = muhakGoodDay + muhakToxSeries + muhakOther;
+
+            // 나. 하이트진로
+            var hiteChamisul = parseFloat(document.getElementById('hiteChamisul').value) || 0;
+            var hiteJinro = parseFloat(document.getElementById('hiteJinro').value) || 0;
+            var hiteOther = parseFloat(document.getElementById('hiteOther').value) || 0;
+
+            var hiteTotal = hiteChamisul + hiteJinro + hiteOther;
+
+            // 다. 대선주조
+            var daesunC1 = parseFloat(document.getElementById('daesunC1').value) || 0;
+            var daesunOther = parseFloat(document.getElementById('daesunOther').value) || 0;
+
+            var daesunTotal = daesunC1 + daesunOther;
+
+            // 라. 롯데
+            var lotteSero = parseFloat(document.getElementById('lotteSero').value) || 0;
+            var lotteCheongha = parseFloat(document.getElementById('lotteCheongha').value) || 0;
+
+            var lotteTotal = lotteSero + lotteCheongha;
+
+            // 마. 기타
+            var otherTotal = parseFloat(document.getElementById('otherTotal').value) || 0;
+            var totalTables = muhakTotal + hiteTotal + daesunTotal + lotteTotal + otherTotal;
+
+            // 결과 출력
+            var resultWindow = window.open('', '_blank');
+            resultWindow.document.write('<span id="reportDate">' + dateStr + '</span><br>');
+            resultWindow.document.write('1. 점유비<br>');
+            resultWindow.document.write('<span>&nbsp- 총 방문업소: ' + totalStores + '개</span><br>');
+            resultWindow.document.write('<span>&nbsp- 총 테이블 수: ' + totalTables + 't</span><br>');
+            resultWindow.document.write('<span>가. 무학 ' + muhakTotal + 't (' + ((muhakTotal / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 좋은데이 : ' + muhakGoodDay + 't (' + ((muhakGoodDay / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 톡시리즈 : ' + muhakToxSeries + 't (' + ((muhakToxSeries / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 갈매기 : ' + muhakOther + 't (' + ((muhakOther / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write('</ul></span>');
+            resultWindow.document.write('<span>나. 하이트진로 ' + hiteTotal + 't (' + ((hiteTotal / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 참이슬 : ' + hiteChamisul + 't (' + ((hiteChamisul / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 진로 : ' + hiteJinro + 't (' + ((hiteJinro / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 기타 : ' + hiteOther + 't (' + ((hiteOther / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write('</ul></span>');
+            resultWindow.document.write('<span>다. 대선주조 ' + daesunTotal + 't (' + ((daesunTotal / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 대선(C1포함) : ' + daesunC1 + 't (' + ((daesunC1 / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 기타 : ' + daesunOther + 't (' + ((daesunOther / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write('</ul></span>');
+            resultWindow.document.write('<span>라. 롯데 ' + lotteTotal + 't (' + ((lotteTotal / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 새로 : ' + lotteSero + 't (' + ((lotteSero / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write(' &nbsp- 청하 : ' + lotteCheongha + 't (' + ((lotteCheongha / totalTables) * 100).toFixed(1) + '%)<br>');
+            resultWindow.document.write('</ul></span>');
+            resultWindow.document.write('<span>마. 기타 ' + otherTotal + 't (' + ((otherTotal / totalTables) * 100).toFixed(1) + '%)</span>');
+        }
+
+        function resetForm() {
+            // 모든 입력 필드를 초기화
+            document.getElementById('totalStores').value = '';
+            document.getElementById('muhakGoodDay').value = '';
+            document.getElementById('muhakToxSeries').value = '';
+            document.getElementById('muhakOther').value = '';
+            document.getElementById('hiteChamisul').value = '';
+            document.getElementById('hiteJinro').value = '';
+            document.getElementById('hiteOther').value = '';
+            document.getElementById('daesunC1').value = '';
+            document.getElementById('daesunOther').value = '';
+            document.getElementById('lotteSero').value = '';
+            document.getElementById('lotteCheongha').value = '';
+            document.getElementById('lotteOther').value = '';
+            document.getElementById('otherTotal').value = '';
+        }
+    </script>
                 }
             </script>
         </head>
         <body>
-            <!-- 첫번째 페이지의 내용 -->
-            <!-- ... -->
+            <h1><span id="reportDate"></span></h1>
+
+    <h2>1. 점유비</h2>
+    <p>총 방문업소: <input type="number" id="totalStores" min="0">개</p>
+    <p>총 테이블 수: <span id="totalTables"></span></p>
+    <p>가. 무학 <span id="muhakTotal"></span>
+        <ul>
+            <li>좋은데이 : <input type="number" id="muhakGoodDay" min="0">t (<span id="muhakGoodDayPercentage"></span>)</li>
+            <li>톡시리즈 : <input type="number" id="muhakToxSeries" min="0">t (<span id="muhakToxSeriesPercentage"></span>)</li>
+            <li>갈매기 : <input type="number" id="muhakOther" min="0">t (<span id="muhakOtherPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>나. 하이트진로 <span id="hiteTotal"></span>
+        <ul>
+            <li>참이슬 : <input type="number" id="hiteChamisul" min="0">t (<span id="hiteChamisulPercentage"></span>)</li>
+            <li>진로 : <input type="number" id="hiteJinro" min="0">t (<span id="hiteJinroPercentage"></span>)</li>
+            <li>기타 : <input type="number" id="hiteOther" min="0">t (<span id="hiteOtherPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>다. 대선주조 <span id="daesunTotal"></span>
+        <ul>
+            <li>대선(C1포함) : <input type="number" id="daesunC1" min="0">t (<span id="daesunC1Percentage"></span>)</li>
+            <li>기타 : <input type="number" id="daesunOther" min="0">t (<span id="daesunOtherPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>라. 롯데 <span id="lotteTotal"></span>
+        <ul>
+            <li>새로 : <input type="number" id="lotteSero" min="0">t (<span id="lotteSeroPercentage"></span>)</li>
+            <li>청하 : <input type="number" id="lotteCheongha" min="0">t (<span id="lotteCheonghaPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>마. 기타 <input type="number" id="otherTotal" min="0">t (<span id="otherTotalPercentage"></span>)</p>
+    <button onclick="calculate()">계산하기</button>
+    <button onclick="resetForm()">초기화</button>
         </body>
         </html>
     </div>
