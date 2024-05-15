@@ -214,72 +214,61 @@
             document.getElementById('orders').innerHTML = html;
         }
 
-        function calculatePage2() {
-            const numWorkers = document.getElementById('workers').value;
+    function calculatePage2() {
+        const numWorkers = document.getElementById('workers').value;
 
-            let detailsHtmlForTurnover = '';
-            let detailsHtmlForAdditional = '';
-            let workerNames = '';
+        let detailsHtmlForTurnover = '';
+        let detailsHtmlForAdditional = '';
+        let workerNames = '';
 
-            let totalTurnoverGoodDay = 0;
-            let totalTurnoverToxSoda = 0;
-            let totalTurnoverSeagull = 0;
+        let totalTurnoverGoodDay = 0;
+        let totalTurnoverToxSoda = 0;
+        let totalTurnoverSeagull = 0;
 
-            let totalAdditionalGoodDay = 0;
-            let totalAdditionalToxSoda = 0;
-            let totalAdditionalSeagull = 0;
+        let totalAdditionalGoodDay = 0;
+        let totalAdditionalToxSoda = 0;
+        let totalAdditionalSeagull = 0;
 
-            for (let i = 0; i < numWorkers; i++) {
-                const name = document.getElementById(`name_${i}`).value;
-                workerNames += name + ', ';
+        for (let i = 0; i < numWorkers; i++) {
+            const name = document.getElementById(`name_${i}`).value;
+            workerNames += name + ', ';
 
-                const turnoverGoodDay = parseInt(document.getElementById(`turnoverGoodDay_${i}`).value) || 0;
-                const turnoverToxSoda = parseInt(document.getElementById(`turnoverToxSoda_${i}`).value) || 0;
-                const turnoverSeagull = parseInt(document.getElementById(`turnoverSeagull_${i}`).value) || 0;
-                const additionalGoodDay = parseInt(document.getElementById(`additionalGoodDay_${i}`).value) || 0;
-                const additionalToxSoda = parseInt(document.getElementById(`additionalToxSoda_${i}`).value) || 0;
-                const additionalSeagull = parseInt(document.getElementById(`additionalSeagull_${i}`).value) || 0;
+            const turnoverGoodDay = parseInt(document.getElementById(`turnoverGoodDay_${i}`).value) || 0;
+            const turnoverToxSoda = parseInt(document.getElementById(`turnoverToxSoda_${i}`).value) || 0;
+            const turnoverSeagull = parseInt(document.getElementById(`turnoverSeagull_${i}`).value) || 0;
+            const additionalGoodDay = parseInt(document.getElementById(`additionalGoodDay_${i}`).value) || 0;
+            const additionalToxSoda = parseInt(document.getElementById(`additionalToxSoda_${i}`).value) || 0;
+            const additionalSeagull = parseInt(document.getElementById(`additionalSeagull_${i}`).value) || 0;
 
-                totalTurnoverGoodDay += turnoverGoodDay;
-                totalTurnoverToxSoda += turnoverToxSoda;
-                totalTurnoverSeagull += turnoverSeagull;
+            totalTurnoverGoodDay += turnoverGoodDay;
+            totalTurnoverToxSoda += turnoverToxSoda;
+            totalTurnoverSeagull += turnoverSeagull;
 
-                totalAdditionalGoodDay += additionalGoodDay;
-                totalAdditionalToxSoda += additionalToxSoda;
-                totalAdditionalSeagull += additionalSeagull;
+            totalAdditionalGoodDay += additionalGoodDay;
+            totalAdditionalToxSoda += additionalToxSoda;
+            totalAdditionalSeagull += additionalSeagull;
 
-                detailsHtmlForTurnover += `
-                <span>${name} : ${turnoverGoodDay}t(좋은데이) / ${turnoverToxSoda}t(톡소다) / ${turnoverSeagull}t(부산갈매기)</span><br>
-                `;
-
-                detailsHtmlForAdditional += `
-                <span>${name} : ${additionalGoodDay}t(좋은데이) / ${additionalToxSoda}t(톡소다) / ${additionalSeagull}t(부산갈매기)</span><br>
-                `;
-            }
-
-            const resultHtml = `
-            <span>2. 전환 및 추가주문</span><br>
-            <span>가. 근무인원</span><br>
-            <span>&nbsp;- ${workerNames.slice(0, -2)}</span><br><br>
-            <span>나. 전환 : ${totalTurnoverGoodDay}t(좋은데이) / ${totalTurnoverToxSoda}t(톡소다) / ${totalTurnoverSeagull}t(부산갈매기)</span><br>
-            ${detailsHtmlForTurnover}<br>
-            <span>다. 추가주문 : ${totalAdditionalGoodDay}t(좋은데이) / ${totalAdditionalToxSoda}t(톡소다) / ${totalAdditionalSeagull}t(부산갈매기)</span><br>
-            ${detailsHtmlForAdditional}
+            detailsHtmlForTurnover += `
+            <span>${name} : ${turnoverGoodDay}t(좋은데이) / ${turnoverToxSoda}t(톡소다) / ${turnoverSeagull}t(부산갈매기)</span><br>
             `;
 
-            const newWindow = window.open('', '_blank');
-            newWindow.document.write(resultHtml);
+            detailsHtmlForAdditional += `
+            <span>${name} : ${additionalGoodDay}t(좋은데이) / ${additionalToxSoda}t(톡소다) / ${additionalSeagull}t(부산갈매기)</span><br>
+            `;
         }
 
-        function resetForm() {
-            document.getElementById('orderForm').reset();
-            document.getElementById('orders').innerHTML = '';
-        }
+        const resultHtml = `
+        <span>2. 전환 및 추가주문</span><br>
+        <span>가. 근무인원</span><br>
+        <span>&nbsp;- ${workerNames.slice(0, -2)}</span><br><br>
+        <span>나. 전환 : ${totalTurnoverGoodDay}t(좋은데이) / ${totalTurnoverToxSoda}t(톡소다) / ${totalTurnoverSeagull}t(부산갈매기)</span><br>
+        ${detailsHtmlForTurnover}<br>
+        <span>다. 추가주문 : ${totalAdditionalGoodDay}t(좋은데이) / ${totalAdditionalToxSoda}t(톡소다) / ${totalAdditionalSeagull}t(부산갈매기)</span><br>
+        ${detailsHtmlForAdditional}
+        `;
 
-        document.getElementById('workers').addEventListener('input', function() {
-            const numWorkers = this.value;
-            generateNameFields(numWorkers);
-        });
+        return resultHtml;
+    }
     </script>
 
     </body>
