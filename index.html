@@ -146,193 +146,189 @@
         </html>
     </div>
 
-    <h2>두번째 페이지</h2>
-    <div id="page2">
-        <!-- 두번째 페이지의 코드 -->
-        <!DOCTYPE html>
-        <html lang="ko">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>주문 정보 입력</title>
-            <style>
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
-</style>
-            <script>
-                function calculatePage2() {
-                    // 두번째 페이지의 계산 함수 코드
-                      const numWorkers = document.getElementById('workers').value;
+<h2>두번째 페이지</h2>
+<div id="page2">
+    <!-- 두번째 페이지의 코드 -->
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>주문 정보 입력</title>
+        <style>
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+          }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <h2>주문 정보 입력</h2>
+        <form id="orderForm" onsubmit="return false;">
+            <label for="workers">근무 인원 (2명 이상, 10명 이하)</label><br>
+            <input type="number" id="workers" name="workers" min="2" max="10" required><br><br>
 
-  let detailsHtmlForTurnover = '';
-  let detailsHtmlForAdditional = '';
-  let workerNames = '';
+            <div id="workerNames">
+                <!-- 여기에 근무 인원 이름 입력 칸이 동적으로 추가됩니다. -->
+            </div>
 
-  let totalTurnoverGoodDay = 0;
-  let totalTurnoverToxSoda = 0;
-  let totalTurnoverSeagull = 0;
+            <div id="orders">
+                <!-- 여기에 주문 정보 입력 칸이 동적으로 추가됩니다. -->
+            </div>
 
-  let totalAdditionalGoodDay = 0;
-  let totalAdditionalToxSoda = 0;
-  let totalAdditionalSeagull = 0;
-
-  for (let i = 0; i < numWorkers; i++) {
-    const name = document.getElementById(`name_${i}`).value;
-    workerNames += name + ', ';
-
-    const turnoverGoodDay = parseInt(document.getElementById(`turnoverGoodDay_${i}`).value) || 0;
-    const turnoverToxSoda = parseInt(document.getElementById(`turnoverToxSoda_${i}`).value) || 0;
-    const turnoverSeagull = parseInt(document.getElementById(`turnoverSeagull_${i}`).value) || 0;
-    const additionalGoodDay = parseInt(document.getElementById(`additionalGoodDay_${i}`).value) || 0;
-    const additionalToxSoda = parseInt(document.getElementById(`additionalToxSoda_${i}`).value) || 0;
-    const additionalSeagull = parseInt(document.getElementById(`additionalSeagull_${i}`).value) || 0;
-
-    totalTurnoverGoodDay += turnoverGoodDay;
-    totalTurnoverToxSoda += turnoverToxSoda;
-    totalTurnoverSeagull += turnoverSeagull;
-
-    totalAdditionalGoodDay += additionalGoodDay;
-    totalAdditionalToxSoda += additionalToxSoda;
-    totalAdditionalSeagull += additionalSeagull;
-
-    detailsHtmlForTurnover += `
-      <span>${name} : ${turnoverGoodDay}t(좋은데이) / ${turnoverToxSoda}t(톡소다) / ${turnoverSeagull}t(부산갈매기)</span><br>
-    `;
-
-    detailsHtmlForAdditional += `
-      <span>${name} : ${additionalGoodDay}t(좋은데이) / ${additionalToxSoda}t(톡소다) / ${additionalSeagull}t(부산갈매기)</span><br>
-    `;
-  }
-
-  const resultHtml = `
-    <span>2. 전환 및 추가주문</span><br>
-    <span>가. 근무인원</span><br>
-    <span>&nbsp;- ${workerNames.slice(0, -2)}</span><br><br>
-    <span>나. 전환 : ${totalTurnoverGoodDay}t(좋은데이) / ${totalTurnoverToxSoda}t(톡소다) / ${totalTurnoverSeagull}t(부산갈매기)</span><br>
-    ${detailsHtmlForTurnover}<br>
-    <span>다. 추가주문 : ${totalAdditionalGoodDay}t(좋은데이) / ${totalAdditionalToxSoda}t(톡소다) / ${totalAdditionalSeagull}t(부산갈매기)</span><br>
-    ${detailsHtmlForAdditional}
-  `;
-  
-  const newWindow = window.open('', '_blank');
-  newWindow.document.write(resultHtml);
-}
-
-function resetForm() {
-  document.getElementById('orderForm').reset();
-  document.getElementById('orders').innerHTML = '';
-}
-
-document.getElementById('workers').addEventListener('input', function() {
-  const numWorkers = this.value;
-  generateNameFields(numWorkers);
-                });
-            </script>
-        </head>
-        <body>
-            <!-- 두번째 페이지의 내용 -->
-            <div class="container">
-  <h2>주문 정보 입력</h2>
-  <form id="orderForm" onsubmit="return false;">
-    <label for="workers">근무 인원 (2명 이상, 10명 이하)</label><br>
-    <input type="number" id="workers" name="workers" min="2" max="10" required><br><br>
-
-    <div id="workerNames">
-      <!-- 여기에 근무 인원 이름 입력 칸이 동적으로 추가됩니다. -->
+            <button type="button" onclick="calculate()">계산하기</button>
+            <button type="button" onclick="resetForm()">초기화</button>
+        </form>
     </div>
-
-    <div id="orders">
-      <!-- 여기에 주문 정보 입력 칸이 동적으로 추가됩니다. -->
-    </div>
-
-    <button type="button" onclick="calculate()">계산하기</button>
-    <button type="button" onclick="resetForm()">초기화</button>
-  </form>
-</div>
-
-<script>
-function generateNameFields(numWorkers) {
-  let html = '';
-  for (let i = 0; i < numWorkers; i++) {
-    html += `
-      <div id="worker_${i}_order">
-        <h3>직원 ${i + 1}의 주문 정보</h3>
-        <label for="name_${i}">직원 이름:</label>
-        <input type="text" id="name_${i}" name="name_${i}" required><br><br>
-
-        <label for="turnoverGoodDay_${i}">나. 전환 - 좋은데이 (t):</label>
-        <input type="number" id="turnoverGoodDay_${i}" name="turnoverGoodDay_${i}" min="0" value="0" required><br>
-        <label for="turnoverToxSoda_${i}">나. 전환 - 톡소다 (t):</label>
-        <input type="number" id="turnoverToxSoda_${i}" name="turnoverToxSoda_${i}" min="0" value="0" required><br>
-        <label for="turnoverSeagull_${i}">나. 전환 - 부산갈매기 (t):</label>
-        <input type="number" id="turnoverSeagull_${i}" name="turnoverSeagull_${i}" min="0" value="0" required><br><br>
-
-        <label for="additionalGoodDay_${i}">다. 추가주문 - 좋은데이 (t):</label>
-        <input type="number" id="additionalGoodDay_${i}" name="additionalGoodDay_${i}" min="0" value="0" required><br>
-        <label for="additionalToxSoda_${i}">다. 추가주문 - 톡소다 (t):</label>
-        <input type="number" id="additionalToxSoda_${i}" name="additionalToxSoda_${i}" min="0" value="0" required><br>
-        <label for="additionalSeagull_${i}">다. 추가주문 - 부산갈매기 (t):</label>
-        <input type="number" id="additionalSeagull_${i}" name="additionalSeagull_${i}" min="0" value="0" required><br><br>
-      </div>
-    `;
-  }
-  document.getElementById('orders').innerHTML = html;
-}
-            <!-- ... -->
-        </body>
-        </html>
-    </div>
-
-    <h2>세번째 페이지</h2>
-    <div id="page3">
-        <!-- 세번째 페이지의 코드 -->
-        <!DOCTYPE html>
-        <html lang="ko">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>실적 보고 양식</title>
-            <script>
-                function calculatePage3() {
-                    // 세번째 페이지의 계산 함수 코드
-                }
-            </script>
-        </head>
-        <body>
-            <!-- 세번째 페이지의 내용 -->
-            <!-- ... -->
-        </body>
-        </html>
-    </div>
-
-    <button onclick="calculateAll()">종합 결과 계산하기</button>
-
-    <div id="overallResult"></div>
 
     <script>
-        function calculateAll() {
-            // 각 페이지의 계산 함수 호출하여 결과 수집
-            var page1Result = calculatePage1();
-            var page2Result = calculatePage2();
-            var page3Result = calculatePage3();
+        function generateNameFields(numWorkers) {
+            let html = '';
+            for (let i = 0; i < numWorkers; i++) {
+                html += `
+                <div id="worker_${i}_order">
+                    <h3>직원 ${i + 1}의 주문 정보</h3>
+                    <label for="name_${i}">직원 이름:</label>
+                    <input type="text" id="name_${i}" name="name_${i}" required><br><br>
 
-            // 종합 결과 생성
-            var overallResult = "<h2>종합 결과</h2>";
-            overallResult += "<h3>첫번째 페이지 결과</h3>";
-            overallResult += page1Result;
-            overallResult += "<h3>두번째 페이지 결과</h3>";
-            overallResult += page2Result;
-            overallResult += "<h3>세번째 페이지 결과</h3>";
-            overallResult += page3Result;
+                    <label for="turnoverGoodDay_${i}">나. 전환 - 좋은데이 (t):</label>
+                    <input type="number" id="turnoverGoodDay_${i}" name="turnoverGoodDay_${i}" min="0" value="0" required><br>
+                    <label for="turnoverToxSoda_${i}">나. 전환 - 톡소다 (t):</label>
+                    <input type="number" id="turnoverToxSoda_${i}" name="turnoverToxSoda_${i}" min="0" value="0" required><br>
+                    <label for="turnoverSeagull_${i}">나. 전환 - 부산갈매기 (t):</label>
+                    <input type="number" id="turnoverSeagull_${i}" name="turnoverSeagull_${i}" min="0" value="0" required><br><br>
 
-            // 종합 결과를 페이지에 출력
-            document.getElementById('overallResult').innerHTML = overallResult;
+                    <label for="additionalGoodDay_${i}">다. 추가주문 - 좋은데이 (t):</label>
+                    <input type="number" id="additionalGoodDay_${i}" name="additionalGoodDay_${i}" min="0" value="0" required><br>
+                    <label for="additionalToxSoda_${i}">다. 추가주문 - 톡소다 (t):</label>
+                    <input type="number" id="additionalToxSoda_${i}" name="additionalToxSoda_${i}" min="0" value="0" required><br>
+                    <label for="additionalSeagull_${i}">다. 추가주문 - 부산갈매기 (t):</label>
+                    <input type="number" id="additionalSeagull_${i}" name="additionalSeagull_${i}" min="0" value="0" required><br><br>
+                </div>
+                `;
+            }
+            document.getElementById('orders').innerHTML = html;
         }
+
+        function calculatePage2() {
+            const numWorkers = document.getElementById('workers').value;
+
+            let detailsHtmlForTurnover = '';
+            let detailsHtmlForAdditional = '';
+            let workerNames = '';
+
+            let totalTurnoverGoodDay = 0;
+            let totalTurnoverToxSoda = 0;
+            let totalTurnoverSeagull = 0;
+
+            let totalAdditionalGoodDay = 0;
+            let totalAdditionalToxSoda = 0;
+            let totalAdditionalSeagull = 0;
+
+            for (let i = 0; i < numWorkers; i++) {
+                const name = document.getElementById(`name_${i}`).value;
+                workerNames += name + ', ';
+
+                const turnoverGoodDay = parseInt(document.getElementById(`turnoverGoodDay_${i}`).value) || 0;
+                const turnoverToxSoda = parseInt(document.getElementById(`turnoverToxSoda_${i}`).value) || 0;
+                const turnoverSeagull = parseInt(document.getElementById(`turnoverSeagull_${i}`).value) || 0;
+                const additionalGoodDay = parseInt(document.getElementById(`additionalGoodDay_${i}`).value) || 0;
+                const additionalToxSoda = parseInt(document.getElementById(`additionalToxSoda_${i}`).value) || 0;
+                const additionalSeagull = parseInt(document.getElementById(`additionalSeagull_${i}`).value) || 0;
+
+                totalTurnoverGoodDay += turnoverGoodDay;
+                totalTurnoverToxSoda += turnoverToxSoda;
+                totalTurnoverSeagull += turnoverSeagull;
+
+                totalAdditionalGoodDay += additionalGoodDay;
+                totalAdditionalToxSoda += additionalToxSoda;
+                totalAdditionalSeagull += additionalSeagull;
+
+                detailsHtmlForTurnover += `
+                <span>${name} : ${turnoverGoodDay}t(좋은데이) / ${turnoverToxSoda}t(톡소다) / ${turnoverSeagull}t(부산갈매기)</span><br>
+                `;
+
+                detailsHtmlForAdditional += `
+                <span>${name} : ${additionalGoodDay}t(좋은데이) / ${additionalToxSoda}t(톡소다) / ${additionalSeagull}t(부산갈매기)</span><br>
+                `;
+            }
+
+            const resultHtml = `
+            <span>2. 전환 및 추가주문</span><br>
+            <span>가. 근무인원</span><br>
+            <span>&nbsp;- ${workerNames.slice(0, -2)}</span><br><br>
+            <span>나. 전환 : ${totalTurnoverGoodDay}t(좋은데이) / ${totalTurnoverToxSoda}t(톡소다) / ${totalTurnoverSeagull}t(부산갈매기)</span><br>
+            ${detailsHtmlForTurnover}<br>
+            <span>다. 추가주문 : ${totalAdditionalGoodDay}t(좋은데이) / ${totalAdditionalToxSoda}t(톡소다) / ${totalAdditionalSeagull}t(부산갈매기)</span><br>
+            ${detailsHtmlForAdditional}
+            `;
+
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(resultHtml);
+        }
+
+        function resetForm() {
+            document.getElementById('orderForm').reset();
+            document.getElementById('orders').innerHTML = '';
+        }
+
+        document.getElementById('workers').addEventListener('input', function() {
+            const numWorkers = this.value;
+            generateNameFields(numWorkers);
+        });
     </script>
-</body>
-</html>
+
+    </body>
+    </html>
+</div>
+
+<h2>세번째 페이지</h2>
+<div id="page3">
+    <!-- 세번째 페이지의 코드 -->
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>실적 보고 양식</title>
+        <script>
+            function calculatePage3() {
+                // 세번째 페이지의 계산 함수 코드
+            }
+        </script>
+    </head>
+    <body>
+    <!-- 세번째 페이지의 내용 -->
+    <!-- ... -->
+    </body>
+    </html>
+</div>
+
+<button onclick="calculateAll()">종합 결과 계산하기</button>
+
+<div id="overallResult"></div>
+
+<script>
+    function calculateAll() {
+        // 각 페이지의 계산 함수 호출하여 결과 수집
+        var page1Result = calculatePage1();
+        var page2Result = calculatePage2();
+        var page3Result = calculatePage3();
+
+        // 종합 결과 생성
+        var overallResult = "<h2>종합 결과</h2>";
+        overallResult += "<h3>첫번째 페이지 결과</h3>";
+        overallResult += page1Result;
+        overallResult += "<h3>두번째 페이지 결과</h3>";
+        overallResult += page2Result;
+        overallResult += "<h3>세번째 페이지 결과</h3>";
+        overallResult += page3Result;
+
+        // 종합 결과를 페이지에 출력
+        document.getElementById('overallResult').innerHTML = overallResult;
+    }
+</script>
