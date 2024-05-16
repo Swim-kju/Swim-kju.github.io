@@ -1,26 +1,125 @@
 <!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<h1>My First CSS Example</h1>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>다중 페이지 출력</title>
+    <title>전체 코드 통합</title>
 </head>
 <body>
-    <h1>다중 페이지 출력</h1>
+    <!-- 첫번째 섹션 -->
+    <h1><span id="reportDate"></span></h1>
+    <h2>1. 점유비</h2>
+    <p>총 방문업소: <input type="number" id="totalStores" min="0">개</p>
+    <p>총 테이블 수: <span id="totalTables"></span></p>
+    <p>가. 무학 <span id="muhakTotal"></span>
+        <ul>
+            <li>좋은데이 : <input type="number" id="muhakGoodDay" min="0">t (<span id="muhakGoodDayPercentage"></span>)</li>
+            <li>톡시리즈 : <input type="number" id="muhakToxSeries" min="0">t (<span id="muhakToxSeriesPercentage"></span>)</li>
+            <li>갈매기 : <input type="number" id="muhakOther" min="0">t (<span id="muhakOtherPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>나. 하이트진로 <span id="hiteTotal"></span>
+        <ul>
+            <li>참이슬 : <input type="number" id="hiteChamisul" min="0">t (<span id="hiteChamisulPercentage"></span>)</li>
+            <li>진로 : <input type="number" id="hiteJinro" min="0">t (<span id="hiteJinroPercentage"></span>)</li>
+            <li>기타 : <input type="number" id="hiteOther" min="0">t (<span id="hiteOtherPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>다. 대선주조 <span id="daesunTotal"></span>
+        <ul>
+            <li>대선(C1포함) : <input type="number" id="daesunC1" min="0">t (<span id="daesunC1Percentage"></span>)</li>
+            <li>기타 : <input type="number" id="daesunOther" min="0">t (<span id="daesunOtherPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>라. 롯데 <span id="lotteTotal"></span>
+        <ul>
+            <li>새로 : <input type="number" id="lotteSero" min="0">t (<span id="lotteSeroPercentage"></span>)</li>
+            <li>청하 : <input type="number" id="lotteCheongha" min="0">t (<span id="lotteCheonghaPercentage"></span>)</li>
+        </ul>
+    </p>
+    <p>마. 기타 <input type="number" id="otherTotal" min="0">t (<span id="otherTotalPercentage"></span>)</p>
+    <h3 id="section1Result"style="display: none;"></h3>
 
-    <h2>첫번째 페이지</h2>
-    <div id="page1">
-        <!-- 첫번째 페이지의 코드 -->
-        <!DOCTYPE html>
-        <html lang="ko">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>실적 보고 양식</title>
-            <script>
-                function calculatePage1() {
-                    // 첫번째 페이지의 계산 함수 코드
-                                // 1. 현재 날짜 설정
+    <!-- 두번째 섹션 -->
+    <div class="container">
+        <h2>주문 정보 입력</h2>
+        <form id="orderForm" onsubmit="return false;">
+            <label for="workers">근무 인원 (2명 이상, 10명 이하)</label><br>
+            <input type="number" id="workers" name="workers" min="2" max="10" required><br><br>
+
+            <div id="workerNames">
+                <!-- 여기에 근무 인원 이름 입력 칸이 동적으로 추가됩니다. -->
+            </div>
+
+            <div id="orders">
+                <!-- 여기에 주문 정보 입력 칸이 동적으로 추가됩니다. -->
+            </div>
+
+            <h3 id="section2Result"style="display: none;"></h3>
+    </div>
+
+    <!-- 세번째 섹션 -->
+    <h2>3. 타사 판촉인원 / 판촉물 및 판촉내용</h2>
+    <ul>
+        <li>켈리 <input type="text" id="kelly">명 / 스푸너, 모닝케어, 아이셔, 비타500 젤리 일반 판촉 행사</li>
+        <li>대선 <input type="text" id="daesun">명 / 헛개숙취해소병, 벌꿀 일반 판촉 행사</li>
+        <li>새로 <input type="text" id="saero">명 / 소주잔, 핸드크림 일반 판촉 행사</li>
+    </ul>
+
+    <h2>4. ★자사 판촉물 재고량★ (박스로 기입해서 올려주세요)</h2>
+    <ul>
+        <li>헛개밸런스 <input type="text" id="hggBalance">박스</li>
+        <li>물티슈 <input type="text" id="wipes">박스</li>
+        <li>쫀디기 <input type="text" id="jjondigi">박스</li>
+    </ul>
+    <h3 id="section3Result"style="display: none;"></h3>
+
+    <!-- 결과를 표시할 div -->
+    <div id="results"></div>
+
+    <button onclick="calculateAllSections()">전체 계산하기</button>
+
+    <script>
+           // 계산 결과를 모두 맨 아래로 이동시키는 함수
+        function moveResultsToBottom() {
+            const resultsDiv = document.getElementById('results');
+            const section1Result = document.getElementById('section1Result').innerHTML;
+            const section2Result = document.getElementById('section2Result').innerHTML;
+            const section3Result = document.getElementById('section3Result').innerHTML;
+
+            resultsDiv.innerHTML = section1Result + '<br>' + section2Result + '<br>' + section3Result;
+        }
+        // 첫번째 섹션 계산 함수
+        function calculateSection1() {
+            // 계산 로직 추가
+            // 1. 현재 날짜 설정
             var today = new Date();
             var day = ["일", "월", "화", "수", "목", "금", "토"];
             var dateStr = "< " + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 ' + day[today.getDay()] + '요일 수영 상권보고 >';
@@ -61,203 +160,77 @@
             var totalTables = muhakTotal + hiteTotal + daesunTotal + lotteTotal + otherTotal;
 
             // 결과 출력
-            var resultWindow = window.open('', '_blank');
-            resultWindow.document.write('<span id="reportDate">' + dateStr + '</span><br>');
-            resultWindow.document.write('1. 점유비<br>');
-            resultWindow.document.write('<span>&nbsp- 총 방문업소: ' + totalStores + '개</span><br>');
-            resultWindow.document.write('<span>&nbsp- 총 테이블 수: ' + totalTables + 't</span><br>');
-            resultWindow.document.write('<span>가. 무학 ' + muhakTotal + 't (' + ((muhakTotal / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 좋은데이 : ' + muhakGoodDay + 't (' + ((muhakGoodDay / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 톡시리즈 : ' + muhakToxSeries + 't (' + ((muhakToxSeries / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 갈매기 : ' + muhakOther + 't (' + ((muhakOther / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write('</ul></span>');
-            resultWindow.document.write('<span>나. 하이트진로 ' + hiteTotal + 't (' + ((hiteTotal / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 참이슬 : ' + hiteChamisul + 't (' + ((hiteChamisul / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 진로 : ' + hiteJinro + 't (' + ((hiteJinro / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 기타 : ' + hiteOther + 't (' + ((hiteOther / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write('</ul></span>');
-            resultWindow.document.write('<span>다. 대선주조 ' + daesunTotal + 't (' + ((daesunTotal / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 대선(C1포함) : ' + daesunC1 + 't (' + ((daesunC1 / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 기타 : ' + daesunOther + 't (' + ((daesunOther / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write('</ul></span>');
-            resultWindow.document.write('<span>라. 롯데 ' + lotteTotal + 't (' + ((lotteTotal / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 새로 : ' + lotteSero + 't (' + ((lotteSero / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write(' &nbsp- 청하 : ' + lotteCheongha + 't (' + ((lotteCheongha / totalTables) * 100).toFixed(1) + '%)<br>');
-            resultWindow.document.write('</ul></span>');
-            resultWindow.document.write('<span>마. 기타 ' + otherTotal + 't (' + ((otherTotal / totalTables) * 100).toFixed(1) + '%)</span>');
-        }
+    const resultHtml = `
+        <span id="reportDate">${dateStr}</span><br>
+        <span>1. 점유비</span><br>
+        <span>&nbsp- 총 방문업소: ${totalStores}개</span><br>
+        <span>&nbsp- 총 테이블 수: ${totalTables}t</span><br>
+        <span>가. 무학 ${muhakTotal}t (${((muhakTotal / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 좋은데이 : ${muhakGoodDay}t (${((muhakGoodDay / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 톡시리즈 : ${muhakToxSeries}t (${((muhakToxSeries / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 갈매기 : ${muhakOther}t (${((muhakOther / totalTables) * 100).toFixed(1)}%)<br>
+        나. 하이트진로 ${hiteTotal}t (${((hiteTotal / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 참이슬 : ${hiteChamisul}t (${((hiteChamisul / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 진로 : ${hiteJinro}t (${((hiteJinro / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 기타 : ${hiteOther}t (${((hiteOther / totalTables) * 100).toFixed(1)}%)<br>
+        다. 대선주조 ${daesunTotal}t (${((daesunTotal / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 대선(C1포함) : ${daesunC1}t (${((daesunC1 / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 기타 : ${daesunOther}t (${((daesunOther / totalTables) * 100).toFixed(1)}%)<br>
+        라. 롯데 ${lotteTotal}t (${((lotteTotal / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 새로 : ${lotteSero}t (${((lotteSero / totalTables) * 100).toFixed(1)}%)<br>
+        &nbsp- 청하 : ${lotteCheongha}t (${((lotteCheongha / totalTables) * 100).toFixed(1)}%)<br>
+        마. 기타 ${otherTotal}t (${((otherTotal / totalTables) * 100).toFixed(1)}%)<br>
+    `;
+  
+    // 결과를 원래 페이지에 출력
+    document.getElementById('section1Result').innerHTML = resultHtml;
+}
 
-        function resetForm() {
-            // 모든 입력 필드를 초기화
-            document.getElementById('totalStores').value = '';
-            document.getElementById('muhakGoodDay').value = '';
-            document.getElementById('muhakToxSeries').value = '';
-            document.getElementById('muhakOther').value = '';
-            document.getElementById('hiteChamisul').value = '';
-            document.getElementById('hiteJinro').value = '';
-            document.getElementById('hiteOther').value = '';
-            document.getElementById('daesunC1').value = '';
-            document.getElementById('daesunOther').value = '';
-            document.getElementById('lotteSero').value = '';
-            document.getElementById('lotteCheongha').value = '';
-            document.getElementById('lotteOther').value = '';
-            document.getElementById('otherTotal').value = '';
-                }
-            </script>
-        </head>
-        <body>
-            <!-- 첫번째 페이지의 내용 -->
-                <h1><span id="reportDate"></span></h1>
+        // 두번째 섹션 계산 함수
+function calculateSection2() {
+    const numWorkers = document.getElementById('workers').value;
 
-    <h2>1. 점유비</h2>
-    <p>총 방문업소: <input type="number" id="totalStores" min="0">개</p>
-    <p>총 테이블 수: <span id="totalTables"></span></p>
-    <p>가. 무학 <span id="muhakTotal"></span>
-        <ul>
-            <li>좋은데이 : <input type="number" id="muhakGoodDay" min="0">t (<span id="muhakGoodDayPercentage"></span>)</li>
-            <li>톡시리즈 : <input type="number" id="muhakToxSeries" min="0">t (<span id="muhakToxSeriesPercentage"></span>)</li>
-            <li>갈매기 : <input type="number" id="muhakOther" min="0">t (<span id="muhakOtherPercentage"></span>)</li>
-        </ul>
-    </p>
-    <p>나. 하이트진로 <span id="hiteTotal"></span>
-        <ul>
-            <li>참이슬 : <input type="number" id="hiteChamisul" min="0">t (<span id="hiteChamisulPercentage"></span>)</li>
-            <li>진로 : <input type="number" id="hiteJinro" min="0">t (<span id="hiteJinroPercentage"></span>)</li>
-            <li>기타 : <input type="number" id="hiteOther" min="0">t (<span id="hiteOtherPercentage"></span>)</li>
-        </ul>
-    </p>
-    <p>다. 대선주조 <span id="daesunTotal"></span>
-        <ul>
-            <li>대선(C1포함) : <input type="number" id="daesunC1" min="0">t (<span id="daesunC1Percentage"></span>)</li>
-            <li>기타 : <input type="number" id="daesunOther" min="0">t (<span id="daesunOtherPercentage"></span>)</li>
-        </ul>
-    </p>
-    <p>라. 롯데 <span id="lotteTotal"></span>
-        <ul>
-            <li>새로 : <input type="number" id="lotteSero" min="0">t (<span id="lotteSeroPercentage"></span>)</li>
-            <li>청하 : <input type="number" id="lotteCheongha" min="0">t (<span id="lotteCheonghaPercentage"></span>)</li>
-        </ul>
-    </p>
-    <p>마. 기타 <input type="number" id="otherTotal" min="0">t (<span id="otherTotalPercentage"></span>)</p>
-    <button onclick="calculate()">계산하기</button>
-    <button onclick="resetForm()">초기화</button>
-            <!-- ... -->
-        </body>
-        </html>
-    </div>
+    let detailsHtmlForTurnover = '';
+    let detailsHtmlForAdditional = '';
+    let workerNames = '';
 
-<h2>두번째 페이지</h2>
-<div id="page2">
-    <!-- 두번째 페이지의 코드 -->
-    <!DOCTYPE html>
-    <html lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>주문 정보 입력</title>
-        <style>
-          .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-          }
-        </style>
-    </head>
-    <body>
-    <div class="container">
-        <h2>주문 정보 입력</h2>
-        <form id="orderForm" onsubmit="return false;">
-            <label for="workers">근무 인원 (2명 이상, 10명 이하)</label><br>
-            <input type="number" id="workers" name="workers" min="2" max="10" required><br><br>
+    let totalTurnoverGoodDay = 0;
+    let totalTurnoverToxSoda = 0;
+    let totalTurnoverSeagull = 0;
 
-            <div id="workerNames">
-                <!-- 여기에 근무 인원 이름 입력 칸이 동적으로 추가됩니다. -->
-            </div>
+    let totalAdditionalGoodDay = 0;
+    let totalAdditionalToxSoda = 0;
+    let totalAdditionalSeagull = 0;
 
-            <div id="orders">
-                <!-- 여기에 주문 정보 입력 칸이 동적으로 추가됩니다. -->
-            </div>
+    for (let i = 0; i < numWorkers; i++) {
+        const name = document.getElementById(`name_${i}`).value;
+        workerNames += name + ', ';
 
-            <button type="button" onclick="calculate()">계산하기</button>
-            <button type="button" onclick="resetForm()">초기화</button>
-        </form>
-    </div>
+        const turnoverGoodDay = parseInt(document.getElementById(`turnoverGoodDay_${i}`).value) || 0;
+        const turnoverToxSoda = parseInt(document.getElementById(`turnoverToxSoda_${i}`).value) || 0;
+        const turnoverSeagull = parseInt(document.getElementById(`turnoverSeagull_${i}`).value) || 0;
+        const additionalGoodDay = parseInt(document.getElementById(`additionalGoodDay_${i}`).value) || 0;
+        const additionalToxSoda = parseInt(document.getElementById(`additionalToxSoda_${i}`).value) || 0;
+        const additionalSeagull = parseInt(document.getElementById(`additionalSeagull_${i}`).value) || 0;
 
-    <script>
-        function generateNameFields(numWorkers) {
-            let html = '';
-            for (let i = 0; i < numWorkers; i++) {
-                html += `
-                <div id="worker_${i}_order">
-                    <h3>직원 ${i + 1}의 주문 정보</h3>
-                    <label for="name_${i}">직원 이름:</label>
-                    <input type="text" id="name_${i}" name="name_${i}" required><br><br>
+        totalTurnoverGoodDay += turnoverGoodDay;
+        totalTurnoverToxSoda += turnoverToxSoda;
+        totalTurnoverSeagull += turnoverSeagull;
 
-                    <label for="turnoverGoodDay_${i}">나. 전환 - 좋은데이 (t):</label>
-                    <input type="number" id="turnoverGoodDay_${i}" name="turnoverGoodDay_${i}" min="0" value="0" required><br>
-                    <label for="turnoverToxSoda_${i}">나. 전환 - 톡소다 (t):</label>
-                    <input type="number" id="turnoverToxSoda_${i}" name="turnoverToxSoda_${i}" min="0" value="0" required><br>
-                    <label for="turnoverSeagull_${i}">나. 전환 - 부산갈매기 (t):</label>
-                    <input type="number" id="turnoverSeagull_${i}" name="turnoverSeagull_${i}" min="0" value="0" required><br><br>
+        totalAdditionalGoodDay += additionalGoodDay;
+        totalAdditionalToxSoda += additionalToxSoda;
+        totalAdditionalSeagull += additionalSeagull;
 
-                    <label for="additionalGoodDay_${i}">다. 추가주문 - 좋은데이 (t):</label>
-                    <input type="number" id="additionalGoodDay_${i}" name="additionalGoodDay_${i}" min="0" value="0" required><br>
-                    <label for="additionalToxSoda_${i}">다. 추가주문 - 톡소다 (t):</label>
-                    <input type="number" id="additionalToxSoda_${i}" name="additionalToxSoda_${i}" min="0" value="0" required><br>
-                    <label for="additionalSeagull_${i}">다. 추가주문 - 부산갈매기 (t):</label>
-                    <input type="number" id="additionalSeagull_${i}" name="additionalSeagull_${i}" min="0" value="0" required><br><br>
-                </div>
-                `;
-            }
-            document.getElementById('orders').innerHTML = html;
-        }
-
-    function calculatePage2() {
-        const numWorkers = document.getElementById('workers').value;
-
-        let detailsHtmlForTurnover = '';
-        let detailsHtmlForAdditional = '';
-        let workerNames = '';
-
-        let totalTurnoverGoodDay = 0;
-        let totalTurnoverToxSoda = 0;
-        let totalTurnoverSeagull = 0;
-
-        let totalAdditionalGoodDay = 0;
-        let totalAdditionalToxSoda = 0;
-        let totalAdditionalSeagull = 0;
-
-        for (let i = 0; i < numWorkers; i++) {
-            const name = document.getElementById(`name_${i}`).value;
-            workerNames += name + ', ';
-
-            const turnoverGoodDay = parseInt(document.getElementById(`turnoverGoodDay_${i}`).value) || 0;
-            const turnoverToxSoda = parseInt(document.getElementById(`turnoverToxSoda_${i}`).value) || 0;
-            const turnoverSeagull = parseInt(document.getElementById(`turnoverSeagull_${i}`).value) || 0;
-            const additionalGoodDay = parseInt(document.getElementById(`additionalGoodDay_${i}`).value) || 0;
-            const additionalToxSoda = parseInt(document.getElementById(`additionalToxSoda_${i}`).value) || 0;
-            const additionalSeagull = parseInt(document.getElementById(`additionalSeagull_${i}`).value) || 0;
-
-            totalTurnoverGoodDay += turnoverGoodDay;
-            totalTurnoverToxSoda += turnoverToxSoda;
-            totalTurnoverSeagull += turnoverSeagull;
-
-            totalAdditionalGoodDay += additionalGoodDay;
-            totalAdditionalToxSoda += additionalToxSoda;
-            totalAdditionalSeagull += additionalSeagull;
-
-            detailsHtmlForTurnover += `
+        detailsHtmlForTurnover += `
             <span>${name} : ${turnoverGoodDay}t(좋은데이) / ${turnoverToxSoda}t(톡소다) / ${turnoverSeagull}t(부산갈매기)</span><br>
-            `;
+        `;
 
-            detailsHtmlForAdditional += `
+        detailsHtmlForAdditional += `
             <span>${name} : ${additionalGoodDay}t(좋은데이) / ${additionalToxSoda}t(톡소다) / ${additionalSeagull}t(부산갈매기)</span><br>
-            `;
-        }
+        `;
+    }
 
-        const resultHtml = `
+    const resultHtml = `
         <span>2. 전환 및 추가주문</span><br>
         <span>가. 근무인원</span><br>
         <span>&nbsp;- ${workerNames.slice(0, -2)}</span><br><br>
@@ -265,60 +238,83 @@
         ${detailsHtmlForTurnover}<br>
         <span>다. 추가주문 : ${totalAdditionalGoodDay}t(좋은데이) / ${totalAdditionalToxSoda}t(톡소다) / ${totalAdditionalSeagull}t(부산갈매기)</span><br>
         ${detailsHtmlForAdditional}
+    `;
+  
+    // 결과를 원래 페이지에 출력
+    document.getElementById('section2Result').innerHTML = resultHtml;
+}
+
+// 두번째 섹션 generation 함수
+function generateNameFields(numWorkers) {
+    let html = '';
+    for (let i = 0; i < numWorkers; i++) {
+        html += `
+            <div id="worker_${i}_order">
+                <h3>직원 ${i + 1}의 주문 정보</h3>
+                <label for="name_${i}">직원 이름:</label>
+                <input type="text" id="name_${i}" name="name_${i}" required><br><br>
+
+                <label for="turnoverGoodDay_${i}">나. 전환 - 좋은데이 (t):</label>
+                <input type="number" id="turnoverGoodDay_${i}" name="turnoverGoodDay_${i}" min="0" value="0" required><br>
+                <label for="turnoverToxSoda_${i}">나. 전환 - 톡소다 (t):</label>
+                <input type="number" id="turnoverToxSoda_${i}" name="turnoverToxSoda_${i}" min="0" value="0" required><br>
+                <label for="turnoverSeagull_${i}">나. 전환 - 부산갈매기 (t):</label>
+                <input type="number" id="turnoverSeagull_${i}" name="turnoverSeagull_${i}" min="0" value="0" required><br><br>
+
+                <label for="additionalGoodDay_${i}">다. 추가주문 - 좋은데이 (t):</label>
+                <input type="number" id="additionalGoodDay_${i}" name="additionalGoodDay_${i}" min="0" value="0" required><br>
+                <label for="additionalToxSoda_${i}">다. 추가주문 - 톡소다 (t):</label>
+                <input type="number" id="additionalToxSoda_${i}" name="additionalToxSoda_${i}" min="0" value="0" required><br>
+                <label for="additionalSeagull_${i}">다. 추가주문 - 부산갈매기 (t):</label>
+                <input type="number" id="additionalSeagull_${i}" name="additionalSeagull_${i}" min="0" value="0" required><br><br>
+            </div>
         `;
-
-        return resultHtml;
     }
-</script>
+    document.getElementById('orders').innerHTML = html;
+}
 
+        // 세번째 섹션 계산 함수
+        function calculateSection3() {
+            // 계산 로직 추가
+            // 타사 판촉인원 및 판촉내용 입력 받기
+            var kelly = document.getElementById('kelly').value || '0';
+            var daesun = document.getElementById('daesun').value || '0';
+            var saero = document.getElementById('saero').value || '0';
 
-    </body>
-    </html>
-</div>
+            // 자사 판촉물 재고량 입력 받기
+            var hggBalance = document.getElementById('hggBalance').value || '0';
+            var wipes = document.getElementById('wipes').value || '0';
+            var jjondigi = document.getElementById('jjondigi').value || '0';
 
-<h2>세번째 페이지</h2>
-<div id="page3">
-    <!-- 세번째 페이지의 코드 -->
-    <!DOCTYPE html>
-    <html lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>실적 보고 양식</title>
-        <script>
-            function calculatePage3() {
-                // 세번째 페이지의 계산 함수 코드
-            }
-        </script>
-    </head>
-    <body>
-    <!-- 세번째 페이지의 내용 -->
-    <!-- ... -->
-    </body>
-    </html>
-</div>
-
-<button onclick="calculateAll()">종합 결과 계산하기</button>
-
-<div id="overallResult"></div>
-
-<script>
-    function calculateAll() {
-        // 각 페이지의 계산 함수 호출하여 결과 수집
-        var page1Result = calculatePage1();
-        var page2Result = calculatePage2();
-        var page3Result = calculatePage3();
-
-        // 종합 결과 생성
-        var overallResult = "<h2>종합 결과</h2>";
-        overallResult += "<h3>첫번째 페이지 결과</h3>";
-        overallResult += page1Result;
-        overallResult += "<h3>두번째 페이지 결과</h3>";
-        overallResult += page2Result;
-        overallResult += "<h3>세번째 페이지 결과</h3>";
-        overallResult += page3Result;
-
-        // 종합 결과를 페이지에 출력
-        document.getElementById('overallResult').innerHTML = overallResult;
-    }
-</script>
+            // 결과 출력
+    const resultHtml = `
+        <span>3. 타사 판촉인원 / 판촉물 및 판촉내용</span><br>
+        <span>켈리 ${kelly}명 / 스푸너, 모닝케어, 아이셔, 비타500 젤리 일반 판촉 행사</span><br>
+        <span>대선 ${daesun}명 / 헛개숙취해소병, 벌꿀 일반 판촉 행사</span><br>
+        <span>새로 ${saero}명 / 소주잔, 핸드크림 일반 판촉 행사</span><br><br>
+        
+        <span>4. ★자사 판촉물 재고량★ (박스로 기입해서 올려주세요)</span><br>
+        <span>&nbsp;- 헛개밸런스 ${hggBalance}박스</span><br>
+        <span>&nbsp;- 물티슈 ${wipes}박스</span><br>
+        <span>&nbsp;- 쫀디기 ${jjondigi}박스</span><br>
+    `;
+  
+    // 결과를 원래 페이지에 출력
+    document.getElementById('section3Result').innerHTML = resultHtml;
+}
+  document.getElementById('workers').addEventListener('input', function () {
+            const numWorkers = this.value;
+            generateNameFields(numWorkers);
+        });
+        function calculateAllSections() {
+            calculateSection1();
+            calculateSection2();
+            calculateSection3();
+            moveResultsToBottom(); // 결과를 맨 아래로 이동
+            showAllSectionResults(); // 모든 섹션 결과 다시 보이기
+        }
+        
+        // 이하 생략...
+    </script>
+</body>
+</html>
