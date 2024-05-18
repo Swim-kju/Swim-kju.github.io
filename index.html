@@ -97,9 +97,16 @@
     <!-- 결과를 표시할 div -->
     <div id="results"></div>
 
-    <button onclick="calculateAllSections()">전체 계산하기</button>
+    <br><button onclick="calculateAllSections()">전체 계산하기</button>
+
+<button id="printButton">결과 출력하기</button>
 
     <script>
+// 이벤트 핸들러를 JavaScript 코드로 추가합니다.
+        document.getElementById('printButton').addEventListener('click', function() {
+            printResults();
+        });
+
            // 계산 결과를 모두 맨 아래로 이동시키는 함수
         function moveResultsToBottom() {
             const resultsDiv = document.getElementById('results');
@@ -258,7 +265,10 @@ function generateNameFields(numWorkers) {
                 <input type="number" id="turnoverSeagull_${i}" name="turnoverSeagull_${i}" min="0" value="" required><br><br>
 
                 <label for="additionalGoodDay_${i}">다. 추가주문 - 좋은데이 (t):</label>
-                <input type="number" id="additionalGoodDay_${i}" name="additionalGoodDay_${i}" min="0" value="" required><br>
+                <input type="number" id="additionalGoodDay_${i}" name="additional_${i}" min="0" value="" required><br><br>
+
+                <label for="additionalGoodDay_${i}">다. 추가주문 - 좋은데이 (t):</label>
+                <input type="number" id="additionalGoodDay_${i}" name="additionaid="additionalGoodDay_${i}" name="additionalGoodDay_${i}" min="0" value="" required><br>
                 <label for="additionalToxSoda_${i}">다. 추가주문 - 톡소다 (t):</label>
                 <input type="number" id="additionalToxSoda_${i}" name="additionalToxSoda_${i}" min="0" value="" required><br>
                 <label for="additionalSeagull_${i}">다. 추가주문 - 부산갈매기 (t):</label>
@@ -308,6 +318,18 @@ function generateNameFields(numWorkers) {
             calculateSection3();
             moveResultsToBottom(); // 결과를 맨 아래로 이동
             showAllSectionResults(); // 모든 섹션 결과 다시 보이기
+        }
+
+// 결과를 새 창에 출력하는 함수
+        function printResults() {
+            const newWindow = window.open('', '_blank');
+            const section1Result = document.getElementById('section1Result').innerHTML;
+            const section2Result = document.getElementById('section2Result').innerHTML;
+            const section3Result = document.getElementById('section3Result').innerHTML;
+
+            const resultsHtml = section1Result + '<br>' + section2Result + '<br>' + section3Result;
+            newWindow.document.write(resultsHtml);
+            newWindow.document.close();
         }
         
         // 이하 생략...
